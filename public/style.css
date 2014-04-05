@@ -1,0 +1,120 @@
+
+html {
+  font-family: 'Inconsolata';
+  color: #6FB530;
+  min-height: 100%;
+}
+
+body {
+  background: #111111;
+  min-height: 100%;
+}
+
+strong {
+  font-weight: 700;
+}
+
+a {
+  color: #4F6268;
+  text-decoration: none;
+}
+a:hover {
+  color: #4B8391;
+  text-decoration: underline;
+}
+
+p {
+  margin: 10px 0px;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'PT Mono';
+  font-size: 55px;
+  font-weight: 700;
+  padding: 20px 0px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h4 {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.green {
+  color: #6FB530;
+}
+.red {
+  color: #E04734;
+}
+
+#wrapper {
+  position: relative;
+  background: #222222;
+  width: 80%;
+  margin: 0 auto;
+  box-shadow: 0px 0px 6px #000;
+  min-height: 100%;
+}
+@media (max-width: 1000px) {
+  #wrapper {
+    width: 90%
+  }
+}
+
+#loading_comments, #status {
+  position: relative;
+  padding: 15px 45px;
+  color: #E8D83F;
+  background: #1C1C1C;
+}
+
+
+
+/******** FIELD ********/
+#field {
+  position: relative;
+  margin: 20px;
+}
+#fieldtable {
+}
+.cell {
+  margin: 1px;
+  border: 1px solid #6FB530;
+  width: 75px;
+  height: 75px;
+}
+  .cell:hover {
+    background: #333;
+  }
+
+/******** ROVER ********/
+#rover {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  padding: 5px;
+  left: 300px;
+  top: 150px;
+}
+  #rover > div {
+    position: relative;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 20%;
+    height: 20%;
+  }
+  #rover .piece {
+    background: #6FB530;
+  }
+
+/******** CONTROLS ********/
+#controls {
+  float: right;
+  margin: 20px;
+  width: 280px;
+}

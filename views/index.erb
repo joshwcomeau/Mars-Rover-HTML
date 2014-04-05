@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Mars Rover</title>
+    <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700|Ubuntu+Mono:400,700|PT+Mono' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style type="text/css">
+      #rover {
+        -webkit-animation: movebot 5s; 
+      }
+
+      @-webkit-keyframes movebot
+      {
+      0%   {-webkit-transform:rotate(0deg);left: 300px; top: 150px;}
+      25%  {-webkit-transform:rotate(0deg);left: 300px; top:75px; }
+      50%  {-webkit-transform:rotate(-90deg); left: 300px; top: 75px;}
+      75%  {-webkit-transform:rotate(-90deg);left: 225px; top: 75px;}
+      100%  {-webkit-transform:rotate(90deg);left: 150px; top: 75px;}
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>NASA Remote Unit Controller</h1>
+      
+      <div id="loading_comments">
+        <p>Initializing Local Software........<strong class="green">COMPLETE.</strong>
+        <p>Connecting to Unit #24791 - ROVER-CLASS, deployed to <strong class="red">[ Mars ]</strong>...... <strong class="green">CONNECTED</strong>.
+        <p><strong>Ready for deployment, awaiting instructions.</strong>
+      </div>
+
+      <div id="controls">
+        yeah!
+      </div>
+
+      <div id="field">
+
+        <div id="rover">
+          <div class="piece"></div><div class="nopiece"></div><div class="piece"></div><div class="nopiece"></div><div class="piece"></div>
+          <div class="piece"></div><div class="piece"></div><div class="nopiece"></div><div class="piece"></div><div class="piece"></div>
+          <div class="piece"></div><div class="nopiece"></div><div class="piece"></div><div class="nopiece"></div><div class="piece"></div>
+          <div class="piece"></div><div class="piece"></div><div class="piece"></div><div class="piece"></div><div class="piece"></div>
+          <div class="piece"></div><div class="nopiece"></div><div class="nopiece"></div><div class="nopiece"></div><div class="piece"></div>
+        </div>
+
+        <table cellspacing="0" cellpadding="0" border="0" id="fieldtable">
+          <% 1.upto(@height) do |y|%>
+          <tr>
+            <% 1.upto(@length) do |x| %>
+              <td class="cell" id="cell_<%= x %>_<%= y %>"></td>
+            <% end %>
+          </tr>
+
+          <% end %>
+
+        </table>
+      </div>
+
+      <div id="status">
+        Current Status: <strong class="green">OK.</strong>
+      </div>
+      
+    </div>
+  </body>
+</html>
+
+
