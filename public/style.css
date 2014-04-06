@@ -240,6 +240,9 @@ h4 {
   font-size: 15px;
   font-weight: 700;
   margin: 4px;
+  display: inline-block;
+  transition: 0.2s;
+  line-height: 20px;
 }
 
 #route {

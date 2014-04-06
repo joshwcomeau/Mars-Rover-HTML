@@ -1,59 +1,84 @@
 <html>
   <head>
     <title>Mars Rover</title>
+    <!--
     <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700|Ubuntu+Mono:400,700|PT+Mono' rel='stylesheet' type='text/css'>
+    -->
     <link rel="stylesheet" type="text/css" href="reset.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <style type="text/css">
-    <% if @instructions %>
+
+    <% if @instructions 
+      ANIMATION_DELAY = 1
+    %>
       #rover {
         display: block;
-        -webkit-animation: movebot 10s; 
-        -webkit-animation-delay: 1s;
+        -webkit-animation: movebot <%= @route.length %>s; 
+        -webkit-animation-delay: <%= ANIMATION_DELAY %>s;
         -webkit-animation-timing-function: cubic-bezier(0.5, 0.2, 0.3, 1.0);
         left: <%= @start_x %>px;
         top: <%= @start_y %>px;
 
       }
 
-      #results_path span { -webkit-animation: lettercolor 1s; }
-      #results_path span:nth-child(1){ -webkit-animation-delay: 1s }
-      #results_path span:nth-child(2){ -webkit-animation-delay: 2s }
-      #results_path span:nth-child(3){ -webkit-animation-delay: 3s }
-      #results_path span:nth-child(4){ -webkit-animation-delay: 4s }
-      #results_path span:nth-child(5){ -webkit-animation-delay: 5s }
-      #results_path span:nth-child(6){ -webkit-animation-delay: 6s }
-      #results_path span:nth-child(7){ -webkit-animation-delay: 7s }
-      #results_path span:nth-child(8){ -webkit-animation-delay: 8s }
-      #results_path span:nth-child(9){ -webkit-animation-delay: 9s }
-      
+      #results_path span { 
+        -webkit-animation: lettercolor 1s;
+       }
+
+      <% (1..@route.length).each do |i| %>
+        #results_path span:nth-child(<%= i %>){ -webkit-animation-delay: <%= i + ANIMATION_DELAY - 1 %>s }
+      <% end %>      
 
       @-webkit-keyframes lettercolor { 
         0%  { opacity:0.5; color: #FFF;}
-        15% { opacity:1;   color: #F00;}
-        85% { opacity:1;   color: #F00;}
-        100% {opacity:0.2; color: #FFF; }
+        15% { opacity:1;   color: #E04734;}
+        85% { opacity:1;   color: #E04734;}
+        100% {opacity:0.2; color: #FFF;}
       }
 
-      /* -webkit-transform:scale(1.05);  */
+    /* if we have 5 steps (4 + init), we want the percentages to be  0%, 25%, 50%, 75%, 100%. */
+    /* Indexes are 0, 1, 2, 3, 4 */
 
+    
 
+    
       @-webkit-keyframes movebot
       {
-      0%    {-webkit-transform:rotate(<%= @route[0][0]  %>deg);left: <%= @route[0][1]  %>px; top:<%= @route[0][2]  %>px; } /* INITIAL */
-      10%   {-webkit-transform:rotate(<%= @route[1][0]  %>deg);left: <%= @route[1][1]  %>px; top:<%= @route[1][2]  %>px; }
-      20%   {-webkit-transform:rotate(<%= @route[2][0]  %>deg);left: <%= @route[2][1]  %>px; top:<%= @route[2][2]  %>px; }
-      30%   {-webkit-transform:rotate(<%= @route[3][0]  %>deg);left: <%= @route[3][1]  %>px; top:<%= @route[3][2]  %>px; }
-      40%   {-webkit-transform:rotate(<%= @route[4][0]  %>deg);left: <%= @route[4][1]  %>px; top:<%= @route[4][2]  %>px; }
-      50%   {-webkit-transform:rotate(<%= @route[5][0]  %>deg);left: <%= @route[5][1]  %>px; top:<%= @route[5][2]  %>px; }
-      60%   {-webkit-transform:rotate(<%= @route[6][0]  %>deg);left: <%= @route[6][1]  %>px; top:<%= @route[6][2]  %>px; }
-      70%   {-webkit-transform:rotate(<%= @route[7][0]  %>deg);left: <%= @route[7][1]  %>px; top:<%= @route[7][2]  %>px; }
-      80%   {-webkit-transform:rotate(<%= @route[8][0]  %>deg);left: <%= @route[8][1]  %>px; top:<%= @route[8][2]  %>px; }
-      90%   {-webkit-transform:rotate(<%= @route[9][0]  %>deg);left: <%= @route[9][1]  %>px; top:<%= @route[9][2]  %>px; }
-      100%  {-webkit-transform:rotate(<%= @route[9][0]  %>deg);left: <%= @route[9][1]  %>px; top:<%= @route[9][2]  %>px; }
-      }
+      <% @route.length.times do | index | %>
+        <%= ( (index / (@route.length.to_f )) * 100 ).round %>%    {-webkit-transform:rotate(<%= @route[index][0]  %>deg);left: <%= @route[index][1]  %>px; top:<%= @route[index][2]  %>px; } 
       <% end %>
+        95%  { opacity: 1;-webkit-transform:rotate(<%= @route[-1][0]  %>deg);left: <%= @route[-1][1]  %>px; top:<%= @route[-1][2]  %>px; }
+        100% { opacity: 0;-webkit-transform:rotate(<%= @route[-1][0]  %>deg);left: <%= @route[-1][1]  %>px; top:<%= @route[-1][2]  %>px; }
+      }
+    <% else %>
+    /* Our first page. Animation to make the loading text interesting. 
+    #content {
+      -webkit-animation: show_stuff 4s; 
+      -webkit-animation-timing-function: cubic-bezier(0.5, 0.2, 0.3, 1.0);
+    }
+    
+    @-webkit-keyframes show_stuff { 
+      0%  { opacity:0;}
+      80% { opacity:0;}
+      100% {opacity:1;}
+    }
+
+    #para1 span {
+
+      -webkit-animation: loading_dots 4s;
+    }
+    <% (1..10).each do |i| %>
+    #para1 span:nth-child(<%= i %>){ -webkit-animation-delay: <%= i.to_f / 5 %>s }
+    <% end %>
+    
+    @-webkit-keyframes loading_dots { 
+        0%  { opacity:0; }
+        100% {opacity:1; }
+      }
+    */
+
+    <% end %>  
     </style>
   </head>
   <body>
@@ -61,114 +86,117 @@
       <h1>NASA Remote Unit Controller</h1>
       
       <div id="loading_comments">
-        <p>Initializing Local Software........<strong class="green">COMPLETE.</strong>
-        <p>Connecting to Unit #24791 - ROVER-CLASS, deployed to <strong class="red">[ Mars ]</strong>...... <strong class="green">CONNECTED</strong>.
+        <p id="para1">Initializing Local Software<span>.</span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span><strong class="green">COMPLETE.</strong>
+        <p>Connecting to Unit #24791 - ROVER-CLASS, deployed to <strong class="red">[ MARS ]</strong><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span><span>.</span> <strong class="green">CONNECTED</strong>.
         <p><strong>Deployed, initializing motor control.</strong>
       </div>
 
+      <div id="content">
       
-      <div id="controls" <%= "style='display: none'" if @instructions %>>
-        <form action="/" method="get">
-          Unit #24791 <strong class="green">DEPLOYED</strong>.<br>
-          Enter Starting Coordinates:
-          <div id="command_start">
-            <select name="x_pos">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5" selected>5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-            </select>
+        <div id="controls" <%= "style='display: none'" if @instructions %>>
+          <form action="/" method="get">
+            Unit #24791 <strong class="green">DEPLOYED</strong>.<br>
+            Enter Starting Coordinates:
+            <div id="command_start">
+              <select name="x_pos">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5" selected>5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+              </select>
 
-            <select name="y_pos">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3" selected>3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+              <select name="y_pos">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
 
-            <select name="heading">
-              <option value="N" selected>N</option>
-              <option value="E">E</option>
-              <option value="S">S</option>
-              <option value="W">W</option>
-            </select>
-          </div>
-          Enter Move Instructions:
-          <div id="command_fields">
-            <input type="text" name="cs_1" maxlength="1">
-            <input type="text" name="cs_2" maxlength="1">
-            <input type="text" name="cs_3" maxlength="1">
-            <input type="text" name="cs_4" maxlength="1">
-            <input type="text" name="cs_5" maxlength="1">
-            <input type="text" name="cs_6" maxlength="1">
-            <input type="text" name="cs_7" maxlength="1">
-            <input type="text" name="cs_8" maxlength="1">
-            <input type="text" name="cs_9" maxlength="1">
-          </div>
-          <div id="submit_div">
-            <input type="submit" value="PUSH INSTRUCTIONS TO ROVER">
-          </div>
-        </form>
-      </div>
-
-      <div id="results" <%= "style='display: none'" unless @instructions %>>
-        <div id="results_header">
-          <strong class="green">INSTRUCTIONS RECEIVED.</strong><br>
+              <select name="heading">
+                <option value="N" selected>N</option>
+                <option value="E">E</option>
+                <option value="S">S</option>
+                <option value="W">W</option>
+              </select>
+            </div>
+            Enter Move Instructions:
+            <div id="command_fields">
+              <input type="text" name="cs_1" maxlength="1">
+              <input type="text" name="cs_2" maxlength="1">
+              <input type="text" name="cs_3" maxlength="1">
+              <input type="text" name="cs_4" maxlength="1">
+              <input type="text" name="cs_5" maxlength="1">
+              <input type="text" name="cs_6" maxlength="1">
+              <input type="text" name="cs_7" maxlength="1">
+              <input type="text" name="cs_8" maxlength="1">
+              <input type="text" name="cs_9" maxlength="1">
+            </div>
+            <div id="submit_div">
+              <input type="submit" value="PUSH INSTRUCTIONS TO ROVER">
+            </div>
+          </form>
         </div>
 
-        <div id="results_start">
-          Rover landed at <strong class="rover_white"><%= @start_string %></strong>
+        <div id="results" <%= "style='display: none'" unless @instructions %>>
+          <div id="results_header">
+            <strong class="green">INSTRUCTIONS RECEIVED.</strong><br>
+          </div>
+
+          <div id="results_start">
+            Rover landed at <strong class="rover_white"><%= @start_string %></strong>
+          </div>
+
+          <div id="results_path_container">
+            <span id="moving_animate">Moving Rover Unit #24791 to desired location:</span>
+
+            <div id="results_path">
+              <% 
+              counter = 0
+              while !@move_instructions[counter].empty? 
+                  %>
+                  <span class="results_instr" id="results_instr_<%= counter %>"><%= @move_instructions[counter] %></span>
+              <% counter += 1
+              end %>
+            </div>  
+          </div>
+
+          <div id="route"><strong>DEVICE COORDINATE PATH: <span class="rover_white"><%= @route %></span></div>
+
+          <div id="reset_div">
+            <a href="/">SEND NEW INSTRUCTIONS</a>
+          </div>
+
         </div>
+        
 
-        <div id="results_path_container">
-          <span id="moving_animate">Moving Rover Unit #24791 to desired location:</span>
+        <div id="field">
 
-          <div id="results_path">
-            <% 
-            counter = 0
-            @move_instructions.each do |i| 
-              counter += 1%>
-              <span class="results_instr" id="results_instr_<%= counter %>"><%= i %></span>
+          <div id="rover">
+            <div class="piece"></div><div class="nopiece"></div><div class="piece"></div><div class="nopiece"></div><div class="piece"></div>
+            <div class="piece"></div><div class="piece"></div><div class="nopiece"></div><div class="piece"></div><div class="piece"></div>
+            <div class="piece"></div><div class="nopiece"></div><div class="piece"></div><div class="nopiece"></div><div class="piece"></div>
+            <div class="piece"></div><div class="piece"></div><div class="piece"></div><div class="piece"></div><div class="piece"></div>
+            <div class="piece"></div><div class="nopiece"></div><div class="nopiece"></div><div class="nopiece"></div><div class="piece"></div>
+          </div>
+
+          <table cellspacing="0" cellpadding="0" border="0" id="fieldtable">
+            <% 1.upto(@height) do |y|%>
+            <tr>
+              <% 1.upto(@length) do |x| %>
+                <td class="cell" id="cell_<%= x %>_<%= y %>"></td>
+              <% end %>
+            </tr>
+
             <% end %>
-          </div>  
+
+          </table>
         </div>
-
-        <div id="route"><strong>DEVICE COORDINATE PATH: <span class="rover_white"><%= @route %></span></div>
-
-        <div id="reset_div">
-          <a href="/">SEND NEW INSTRUCTIONS</a>
-        </div>
-
-      </div>
-      
-
-      <div id="field">
-
-        <div id="rover">
-          <div class="piece"></div><div class="nopiece"></div><div class="piece"></div><div class="nopiece"></div><div class="piece"></div>
-          <div class="piece"></div><div class="piece"></div><div class="nopiece"></div><div class="piece"></div><div class="piece"></div>
-          <div class="piece"></div><div class="nopiece"></div><div class="piece"></div><div class="nopiece"></div><div class="piece"></div>
-          <div class="piece"></div><div class="piece"></div><div class="piece"></div><div class="piece"></div><div class="piece"></div>
-          <div class="piece"></div><div class="nopiece"></div><div class="nopiece"></div><div class="nopiece"></div><div class="piece"></div>
-        </div>
-
-        <table cellspacing="0" cellpadding="0" border="0" id="fieldtable">
-          <% 1.upto(@height) do |y|%>
-          <tr>
-            <% 1.upto(@length) do |x| %>
-              <td class="cell" id="cell_<%= x %>_<%= y %>"></td>
-            <% end %>
-          </tr>
-
-          <% end %>
-
-        </table>
       </div>
 
       

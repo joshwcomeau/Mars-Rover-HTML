@@ -63,7 +63,7 @@ get "/" do
 
   if params.empty?
     @instructions = false
-    @move_instructions = [] # Because we iterate over this when instructions are sent, we're assigning this variable to an empty array to avoid error.
+    @move_instructions = [""] # Because we iterate over this when instructions are sent, we're assigning this variable to an empty array to avoid error.
   else 
     @instructions = true
 
@@ -83,15 +83,17 @@ get "/" do
 
 
     @move_instructions = [ params[:cs_1], params[:cs_2], params[:cs_3], params[:cs_4], params[:cs_5], 
-                          params[:cs_6], params[:cs_7], params[:cs_8], params[:cs_9], ]
+                          params[:cs_6], params[:cs_7], params[:cs_8], params[:cs_9] ]
 
     @move_instructions.each do | v |
       if v == 'M'
         rover.move
+        @route << rover.output
       elsif v == 'L' || v == 'R'
         rover.turn(v)
+        @route << rover.output
       end
-      @route << rover.output
+      
     end
 
     p @route
