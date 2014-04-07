@@ -82,8 +82,8 @@ get "/" do
     @route << @start
 
 
-    @move_instructions = [ params[:cs_1], params[:cs_2], params[:cs_3], params[:cs_4], params[:cs_5], 
-                          params[:cs_6], params[:cs_7], params[:cs_8], params[:cs_9] ]
+    @move_instructions = [ params[:cs_1].upcase, params[:cs_2].upcase, params[:cs_3].upcase, params[:cs_4].upcase, params[:cs_5].upcase, 
+                          params[:cs_6].upcase, params[:cs_7].upcase, params[:cs_8].upcase, params[:cs_9].upcase ]
 
     @move_instructions.each do | v |
       if v == 'M'
