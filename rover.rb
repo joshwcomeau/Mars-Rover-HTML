@@ -8,6 +8,7 @@ class Rover
     S: [0, -75],
     W: [-75, 0]
   }
+  
   @@counter = 0
 
   attr_reader :id, :x, :y, :d
@@ -75,15 +76,24 @@ get "/" do
     @start_angle = convert_direction_to_angles( params[:heading] )
 
     
-    rover = Rover.new(@start_x, @start_y, @heading) # Turn me into a splat
+    rover = Rover.new(@start_x, @start_y, @heading)
 
     @start = [@start_angle, @start_x, @start_y]
     @route = []
     @route << @start
 
 
-    @move_instructions = [ params[:cs_1].upcase, params[:cs_2].upcase, params[:cs_3].upcase, params[:cs_4].upcase, params[:cs_5].upcase, 
-                          params[:cs_6].upcase, params[:cs_7].upcase, params[:cs_8].upcase, params[:cs_9].upcase ]
+    @move_instructions = [ 
+      params[:cs_1].upcase, 
+      params[:cs_2].upcase,
+      params[:cs_3].upcase,
+      params[:cs_4].upcase,
+      params[:cs_5].upcase,
+      params[:cs_6].upcase,
+      params[:cs_7].upcase,
+      params[:cs_8].upcase,
+      params[:cs_9].upcase 
+    ]
 
     @move_instructions.each do | v |
       if v == 'M'
@@ -93,21 +103,12 @@ get "/" do
         rover.turn(v)
         @route << rover.output
       end
-      
     end
 
     p @route
 
 
   end
-
-
-
-
-    # Desired output format: [ [0, 75, 0], [0, 0, -90], [0, 75, 0], ...]
-    # Then, using inject we can get an updated, value-accurate array of [ [0, 75, 0], [0, 75, -90], [0, 150, -90], ...]
-
-
   
   @length = 9
   @height = 5
